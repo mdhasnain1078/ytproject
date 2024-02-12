@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import connectDB from "./db/index.js";
 import express from 'express'
 
-const app = express();
+import {app} from './app.js'
 
 dotenv.config({path: './env'})
 connectDB().then(()=>{
@@ -14,6 +14,11 @@ connectDB().then(()=>{
     console.log("MONGODB connection failed !!! ", error);
 })
 
+// import userRouter from './routes/user.routes.js';
+
+// // routes declaration
+
+// app.use("/api/v1/users", userRouter)
 /*
 const app = express();
 (async () => {
