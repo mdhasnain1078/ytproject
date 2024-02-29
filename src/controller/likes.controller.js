@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { Like } from "../models/like.model";
-import { asyncHandler } from "../utils/asyncHandler";
-import { ApiError } from "../utils/apiError";
-import { ApiResponse } from "../utils/apiResponse";
-import { Tweet } from "../models/tweet.model";
+import { Like } from "../models/like.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/apiError.js";
+import { ApiResponse } from "../utils/apiResponse.js";
+import { Tweet } from "../models/tweet.model.js";
 
 
 const toggleVideoLike = asyncHandler(async(req, res)=>{
@@ -51,6 +51,38 @@ const toggleTweetLike = asyncHandler(async (req, res) =>{
         });
     
         return res.status(200).json(new ApiResponse(200, {isLiked: true}));
+});
+
+
+const toggleCommentLike = asyncHandler(async (req, res) => {
+    const { commentId } = req.params;
+
+    if (!isValidObjectId(commentId)) {
+        throw new ApiError(400, "Invalid commentId");
+    }
+
+
+    const likedAlready = await Like.findOne({
+        comment: commentId,
+        likedBy: req.user?._id,
+    });
+
+    if (likedAlready) {
+        await Like.findByIdAndDelete(likedAlready?._id);
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, { isLiked: false }));
+    }
+
+    await Like.create({
+        comment: commentId,
+        likedBy: req.user?._id,
+    });
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, { isLiked: true }));
 });
 
 const getLikedVideos = asyncHandler(async (req, res) => {

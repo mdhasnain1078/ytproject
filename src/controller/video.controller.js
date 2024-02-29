@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { Video } from "../models/video.model";
-import { asyncHandler } from "../utils/asyncHandler";
+import { Video } from "../models/video.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 
 const getAllVideos = asyncHandler(async (req, res) => {

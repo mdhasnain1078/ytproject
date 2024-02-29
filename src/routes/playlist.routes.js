@@ -9,7 +9,7 @@ import {
     removeVideoFromPlaylist,
     getPlaylistById,
     getUserPlaylists,
-} from "../controllers/playlist.controller.js";
+} from "../controller/playlist.controller.js";
 
 const router = Router();
 

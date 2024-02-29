@@ -8,7 +8,7 @@ import {
     updateVideo,
     publishAVideo,
     togglePublishStatus
-} from "../controllers/video.controller.js";
+} from "../controller/video.controller.js";
 
 const router = Router();
 
